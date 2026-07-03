@@ -1,0 +1,8 @@
+# Local Claude Code config
+.claude/
+
+# Source spreadsheet (kept private, not published to the site)
+*.xlsx
+
+# OS cruft
+.DS_Store
