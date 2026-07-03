@@ -309,6 +309,11 @@
     style: 'currency', currency: 'USD',
     minimumFractionDigits: dec, maximumFractionDigits: dec
   }).format(isFinite(n) ? n : 0);
+  // Currency for rate values (ELR): shows cents only when present, e.g. $3.50, $103.50, $3
+  const usdRate = n => new Intl.NumberFormat('en-US', {
+    style: 'currency', currency: 'USD',
+    minimumFractionDigits: 0, maximumFractionDigits: 2
+  }).format(isFinite(n) ? n : 0);
   const num = (n, dec = 0) => new Intl.NumberFormat('en-US', {
     minimumFractionDigits: dec, maximumFractionDigits: dec
   }).format(isFinite(n) ? n : 0);
@@ -359,10 +364,10 @@
     el('kpiParts').textContent = usd(r.partsGPdollars);
 
     const rows = [
-      ['Additional Sales $ (ELR lift)', num(i.cpHours) + ' hrs', '×', usd(i.elrIncrease) + ' ELR', usd(r.addlSalesELR)],
+      ['Additional Sales $ (ELR lift)', num(i.cpHours) + ' hrs', '×', usdRate(i.elrIncrease) + ' ELR', usd(r.addlSalesELR)],
       ['Gross Profit from ELR Increase', usd(r.addlSalesELR), '×', i.laborGP + '% labor GP', usd(r.gpFromELR)],
       ['Additional Hours Per Month', num(i.roCount) + ' ROs', '×', num(i.hoursIncrease, 2) + ' hrs/RO', num(r.addlHours, 1) + ' hrs'],
-      ['Additional Labor Sales $', num(r.addlHours, 1) + ' hrs', '×', usd(r.elrWithIncrease) + ' ELR', usd(r.addlLaborSales)],
+      ['Additional Labor Sales $', num(r.addlHours, 1) + ' hrs', '×', usdRate(r.elrWithIncrease) + ' ELR', usd(r.addlLaborSales)],
       ['Labor GP from Hours', usd(r.addlLaborSales), '×', i.laborGP + '% labor GP', usd(r.laborGPfromHours)],
       ['Additional Parts Sales $', usd(r.addlLaborSales), '×', i.partsToLabor + '% P:L', usd(r.addlPartsSales)],
       ['Parts Gross Profit $', usd(r.addlPartsSales), '×', i.partsGP + '% parts GP', usd(r.partsGPdollars)],
