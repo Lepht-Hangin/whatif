@@ -4,38 +4,58 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>Hours &amp; ELR Increase — What-If Calculator</title>
-<meta name="theme-color" content="#0f172a" />
+<meta name="theme-color" content="#0072bc" />
 <!-- Add-to-Home-Screen support (iPhone) -->
 <meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
 <meta name="apple-mobile-web-app-title" content="ELR What-If" />
 <link rel="manifest" href="manifest.webmanifest" />
 <link rel="apple-touch-icon" href="icon.svg" />
 <link rel="icon" href="icon.svg" />
 <style>
   :root {
-    --bg: #0f172a;
-    --panel: #1e293b;
-    --panel-2: #273449;
-    --border: #334155;
-    --text: #e2e8f0;
-    --muted: #94a3b8;
-    --accent: #38bdf8;
-    --accent-2: #22c55e;
-    --input-bg: #0f1b2e;
-    --shadow: 0 10px 30px rgba(0,0,0,.35);
+    /* Ethos Group brand palette */
+    --bg: #ffffff;          /* White */
+    --panel: #ffffff;       /* White cards */
+    --panel-2: #f5f6f7;     /* subtle tint for header bars (white + a whisper of gray) */
+    --border: #d1d3d4;      /* 20% Black */
+    --text: #000000;        /* Black */
+    --muted: #6d6e71;       /* 70% Black */
+    --accent: #0072bc;      /* Ethos Blue */
+    --accent-dark: #00527e; /* Dark Blue */
+    --accent-2: #ff8a40;    /* Orange */
+    --input-bg: #ffffff;    /* White */
+    --shadow: 0 4px 16px rgba(0,0,0,.08);
   }
   * { box-sizing: border-box; }
   body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background: radial-gradient(1200px 600px at 70% -10%, #16233b 0%, var(--bg) 55%);
+    background: var(--bg);
     color: var(--text);
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
   }
+  .brand {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 24px 24px 0;
+  }
+  .logo-chip {
+    display: inline-block;   /* logo sits directly on the white page — no chip needed */
+  }
+  .logo {
+    display: block;
+    height: 52px;   /* desktop size */
+    width: auto;
+    max-width: 100%;
+  }
+  @media (max-width: 600px) {
+    .brand { padding-top: 18px; }
+    .logo { height: 38px; }  /* smaller on phones */
+  }
   header {
-    padding: 28px 24px 8px;
+    padding: 20px 24px 8px;
     max-width: 1180px;
     margin: 0 auto;
   }
@@ -106,7 +126,7 @@
   input.has-suffix { padding-right: 30px; }
   input[type="number"]:focus {
     border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(56,189,248,.15);
+    box-shadow: 0 0 0 3px rgba(0,114,188,.18);
   }
   .hint { font-size: 12px; color: var(--muted); margin-top: 5px; }
   .divider { height: 1px; background: var(--border); margin: 18px -18px 0; }
@@ -117,28 +137,30 @@
 
   /* Results */
   .hero {
-    background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
-    border: 1px solid #0f766e;
+    background: linear-gradient(135deg, #0072bc 0%, #00527e 100%);
+    border: 1px solid #00527e;
   }
-  .hero h2 { color: #a7f3d0; background: transparent; border-bottom-color: rgba(255,255,255,.1); }
+  .hero h2 { color: #ffffff; background: transparent; border-bottom-color: rgba(255,255,255,.25); }
   .hero .amount {
-    font-size: 46px; font-weight: 800; letter-spacing: -1px; color: #ecfdf5;
+    font-size: 46px; font-weight: 800; letter-spacing: -1px; color: #ffffff;
     padding: 6px 0 2px;
   }
-  .hero .sub { color: #a7f3d0; font-size: 14px; }
-  .hero .mo { color: #d1fae5; font-size: 14px; margin-top: 10px; }
+  .hero .sub { color: rgba(255,255,255,.85); font-size: 14px; }
+  .hero .mo { color: rgba(255,255,255,.92); font-size: 14px; margin-top: 10px; }
 
   .kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 20px; }
   @media (max-width: 620px) { .kpis { grid-template-columns: 1fr; } }
   .kpi {
     background: var(--panel); border: 1px solid var(--border);
+    border-top: 4px solid var(--border);
     border-radius: 12px; padding: 14px 16px;
   }
   .kpi .label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
-  .kpi .val { font-size: 22px; font-weight: 700; margin-top: 6px; }
-  .kpi.elr .val { color: #38bdf8; }
-  .kpi.labor .val { color: #a78bfa; }
-  .kpi.parts .val { color: #fbbf24; }
+  .kpi .val { font-size: 22px; font-weight: 700; margin-top: 6px; color: var(--text); }
+  /* Color-coded accents: ELR = Ethos Blue, Labor = Dark Blue, Parts = Orange */
+  .kpi.elr { border-top-color: #0072bc; }
+  .kpi.labor { border-top-color: #00527e; }
+  .kpi.parts { border-top-color: #ff8a40; }
 
   /* Waterfall table */
   .flow { margin-top: 20px; }
@@ -152,14 +174,17 @@
 
   footer { max-width: 1180px; margin: 0 auto; padding: 0 24px 40px; color: var(--muted); font-size: 12px; }
   .reset {
-    margin-top: 18px; background: var(--panel-2); color: var(--text);
+    margin-top: 18px; background: #ffffff; color: var(--muted);
     border: 1px solid var(--border); border-radius: 9px; padding: 9px 14px;
-    font-size: 13px; cursor: pointer; transition: background .15s;
+    font-size: 13px; cursor: pointer; transition: background .15s, border-color .15s, color .15s;
   }
-  .reset:hover { background: #31435e; }
+  .reset:hover { background: #f5f6f7; border-color: var(--accent); color: var(--accent); }
 </style>
 </head>
 <body>
+  <div class="brand">
+    <span class="logo-chip"><img class="logo" src="logo.png" alt="Ethos Group" /></span>
+  </div>
   <header>
     <h1>Hours &amp; ELR Increase Sheet</h1>
     <p>Fixed Ops what-if calculator — model the added gross profit from raising your effective labor rate and hours per RO.</p>
