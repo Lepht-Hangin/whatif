@@ -79,6 +79,22 @@
   }
   @media (max-width: 900px) { .wrap { grid-template-columns: 1fr; } }
 
+  /* Desktop: keep the results column pinned and vertically centered while
+     scrolling the inputs. Falls back to internal scroll if the results are
+     ever taller than the viewport, so nothing gets clipped. */
+  @media (min-width: 901px) {
+    .results {
+      position: sticky;
+      top: 0;
+      align-self: start;
+      height: 100vh;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+    .results-inner { margin: auto 0; width: 100%; }
+  }
+
   .card {
     background: var(--panel);
     border: 1px solid var(--border);
@@ -271,7 +287,8 @@
     </div>
 
     <!-- RESULTS -->
-    <div>
+    <div class="results">
+      <div class="results-inner">
       <div class="card hero">
         <h2>Additional Gross Profit Per Year</h2>
         <div class="body">
@@ -306,6 +323,7 @@
             <tbody id="flowBody"></tbody>
           </table>
         </div>
+      </div>
       </div>
     </div>
   </div>
