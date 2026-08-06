@@ -124,6 +124,7 @@
   }
   input.has-prefix { padding-left: 26px; }
   input.has-suffix { padding-right: 30px; }
+  input::placeholder { color: #e2e3e4; opacity: 1; }  /* very light placeholder */
   input[type="number"]:focus {
     border-color: var(--accent);
     box-shadow: 0 0 0 3px rgba(0,114,188,.18);
@@ -406,7 +407,7 @@
   }
 
   function setDefaults() {
-    for (const id of ids) el(id).value = DEFAULTS[id];
+    for (const id of ids) el(id).value = 0;
     render();
   }
 
